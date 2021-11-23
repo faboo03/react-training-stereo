@@ -26,7 +26,7 @@ const todos = [
 
 function Layout() {
   return (
-    <section classId="todo">
+    <section classID="todo">
         <Outlet />
       <NavBar />
     </section>

@@ -24,7 +24,7 @@ function NavBar() {
               <FaPlusSquare />
             </NavLink>
           </div>
-          <div class="btn-group" role="group">
+          <div className="btn-group" role="group">
           <NavLink
               className={'btn btn-outline-dark bg-light'}
               to={`/`}

@@ -6,7 +6,7 @@ function TodoList({todos}) {
             <h1 className="m-3">Liste de tâches</h1>
             <ul className="list-group m-3">
                 { todos.map(
-                    (todo) => <Todo todo={todo} />
+                    (todo,key) => <Todo todo={todo} key={key} />
                 )}
             </ul>       
         </>

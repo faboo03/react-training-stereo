@@ -1,16 +1,32 @@
+import { Component } from "react";
 
+class Todo extends Component {
 
-function Todo({ todo }) {
-    return (
-        <li className="list-group-item d-flex align-items-center" id={todo.id}>
-            { todo.message }
-            {
-                todo.isChecked ? 
-                  <button className="btn btn-sm ms-auto btn-outline-canceled">&#x274C;</button>
-                : <button className="btn btn-sm ms-auto btn-outline-success">&#x2713;</button>
-            }           
-        </li>
-    )
+    constructor(props) {
+        super(props);
+        let {todo} = this.props;
+        this.state = {
+            isChecked: todo.isChecked,
+            message: todo.message            
+        };
+    }
+
+    checkTodo = () => {
+        this.setState(
+            (previousValue, props) =>  ({
+                isChecked: !previousValue.isChecked
+            })
+        )
+    }
+
+    render() {
+        return (
+            <li className="list-group-item d-flex align-items-center">
+                {this.state.message}
+                <button onClick={this.checkTodo} className="btn btn-sm ms-auto btn-outline-success">&#x2713;</button>
+            </li>
+        );
+    }
 }
 
 export default Todo;
