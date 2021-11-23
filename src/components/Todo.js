@@ -6,8 +6,8 @@ class Todo extends Component {
         super(props);
         let {todo} = this.props;
         this.state = {
-            isChecked: todo.isChecked,
-            message: todo.message            
+            isChecked: todo.completed,
+            name: todo.name            
         };
     }
 
@@ -20,10 +20,12 @@ class Todo extends Component {
     }
 
     render() {
+        let className = "list-group-item d-flex align-items-center";
+        
         return (
-            <li className="list-group-item d-flex align-items-center">
-                {this.state.message}
-                <button onClick={this.checkTodo} className="btn btn-sm ms-auto btn-outline-success">&#x2713;</button>
+            <li className={className + (this.state.isChecked?" bg-success":"")}>
+                {this.state.name}
+                <button onClick={this.checkTodo} className={this.state.isChecked?"btn btn-sm ms-auto btn-outline-success":"btn btn-sm ms-auto btn-success"} >&#x2713;</button>
             </li>
         );
     }

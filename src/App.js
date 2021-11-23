@@ -1,28 +1,11 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
 import TodoList from './components/TodoList';
 import NavBar from './components/NavBar';
 import { Routes, Route, BrowserRouter, Outlet } from 'react-router-dom';
 import AddTodo from './components/AddTodo';
-
-const todos = [
-  {
-      message: "Ranger la vaisselle", 
-      isChecked: true
-  },
-  {
-      message: "Répondre appel d'offres", 
-      isChecked: false
-  },
-  {
-      message: "Signer contrat", 
-      isChecked: false
-  },
-  {
-      message: "Ranger la salon", 
-      isChecked: true
-  }
-]
+import data from './data.json';
 
 function Layout() {
   return (
@@ -34,13 +17,19 @@ function Layout() {
 }
 
 function App() {
+  const [tasks, setTasks] = useState(data);
+
+  let addTask = (task) => {
+    setTasks([...tasks,task]);
+  }
+
   return (
     <BrowserRouter>        
         <Routes>
             <Route path="/" element={<Layout />} >
-                <Route path="add-task" element={<AddTodo />} />
-                <Route path=":search" element={<TodoList todos={ todos }/>} />
-                <Route index element={<TodoList todos={ todos }/>} />
+                <Route path="add-task" element={<AddTodo addTask={addTask} />} />
+                <Route path=":search" element={<TodoList tasks={ tasks }/>} />
+                <Route index element={<TodoList tasks={ tasks }/>} />
             </Route>
         </Routes>
     </BrowserRouter>    
