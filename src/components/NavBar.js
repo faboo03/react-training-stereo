@@ -1,39 +1,19 @@
 import { FaCheckSquare, FaListAlt, FaPlusSquare, FaTrash } from 'react-icons/fa';
-import { NavLink } from "react-router-dom";
+import { statusEnum } from './TodoList';
 
-function NavBar() {
-    return (
-        <footer className="d-flex justify-content-between bg-secondary p-3" id="mainFooter">
-          <div className="btn-group">
-            <NavLink
-              className={'btn btn-outline-dark bg-light'}
-              to={`/`}
-            >
-              <FaCheckSquare />
-            </NavLink>
-            <NavLink
-              className={'btn btn-outline-dark bg-light'}
-              to={`/completed`}
-            >
-              <FaListAlt />
-            </NavLink>
-            <NavLink
-              className={'btn btn-outline-dark bg-light'}
-              to={`/add-task`}
-            >
-              <FaPlusSquare />
-            </NavLink>
-          </div>
-          <div className="btn-group" role="group">
-          <NavLink
-              className={'btn btn-outline-dark bg-light'}
-              to={`/delete`}
-            >
-              <FaTrash />
-            </NavLink>
-          </div>
-        </footer>
-    )
+function NavBar({ setListStatus }) {
+  return (
+    <footer className="d-flex justify-content-between bg-secondary p-3" id="mainFooter">
+      <div className="btn-group">
+        <button className="btn btn-outline-dark bg-light" onClick={() => setListStatus(statusEnum.LIST)}><FaCheckSquare /></button>
+        <button className="btn btn-outline-dark bg-light" onClick={() => setListStatus(statusEnum.COMPLETED)}><FaListAlt /></button>
+        <button className="btn btn-outline-dark bg-light" onClick={() => setListStatus(statusEnum.ADD)}><FaPlusSquare /></button>
+      </div>
+      <div className="btn-group" role="group">
+        <button className="btn btn-outline-dark bg-light" onClick={() => setListStatus(statusEnum.DELETE)}><FaTrash /></button>
+      </div>
+    </footer>
+  )
 }
 
 export default NavBar;
