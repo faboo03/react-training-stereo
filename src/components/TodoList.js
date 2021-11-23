@@ -21,20 +21,20 @@ function TodoList() {
         setListStatus(statusEnum.LIST);
     }
 
-    let toggleCompleted = (taskId) => {
-        let currentTask = tasks.map((task) => {
-            if (task.id === taskId) {
+    let toggleCompleted = (currentTask) => {
+        let currentTasks = tasks.map((task) => {
+            if (task.id === currentTask?.id) {
                 task.completed = !task.completed
             }
             return task;
         }
         )
-        setTasks(currentTask);
+        setTasks(currentTasks);
     }
 
-    let handleDelete = (task) => {
+    let handleDelete = (currentTask) => {
         let newTasks = [...tasks]; 
-        newTasks.splice(tasks.indexOf(task),1);
+        newTasks.splice(tasks.indexOf(currentTask),1);
         setTasks(newTasks);
     }
 
@@ -50,14 +50,14 @@ function TodoList() {
             <ul className="list-group m-3">
                 {filteredTasks.length > 0 ?
                     filteredTasks.map(
-                        (task, key) => <Todo {...task} toggleCompleted={toggleCompleted} handleDelete={handleDelete} status={listStatus} key={key} />
+                        (task, key) => <Todo task={task} toggleCompleted={toggleCompleted} handleDelete={handleDelete} listStatus={listStatus} key={key} />
                     ) :
                     <li className="list-group-item d-flex align-items-center">Aucune Tâche</li>
                 }
             </ul>
 
-            {listStatus === statusEnum.ADD? <AddTodo addTask={addTask} />:""}
-           
+            {listStatus === statusEnum.ADD? <AddTodo addTask={addTask} />:""}           
+
             <NavBar setListStatus={setListStatus} />
         </section>
     )
