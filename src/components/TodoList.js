@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Todo from './Todo'; 
 
-function TodoList(props) {
+function TodoList({tasks, toggleCompleted}) {
     const {search} = useParams();
-
-    const [tasks, setTasks] = useState(props.tasks);
 
     let filteredTasks = tasks;
 
@@ -13,14 +10,16 @@ function TodoList(props) {
         filteredTasks = tasks.filter(task => task.completed);
     }
 
-
     return (
         <>
             <h1 className="m-3">Liste de tâches</h1>
             <ul className="list-group m-3">
-                { filteredTasks.map(
-                    (task,key) => <Todo todo={task} key={key} />
-                )}
+                { filteredTasks.length > 0 ? 
+                    filteredTasks.map(
+                        (task,key) => <Todo {...task} toggleCompleted={toggleCompleted} key={key} />
+                    ) : 
+                    <li className="list-group-item d-flex align-items-center">Aucune Tâche</li>
+            }
             </ul>       
         </>
     )

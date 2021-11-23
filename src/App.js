@@ -1,4 +1,3 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import TodoList from './components/TodoList';
@@ -23,13 +22,24 @@ function App() {
     setTasks([...tasks,task]);
   }
 
+  let toggleCompleted = (taskId) => {
+      let currentTask = tasks.map((task) => {
+          if(task.id === taskId) {
+            task.completed = !task.completed
+          }
+          return task;
+        }
+      )
+      setTasks(currentTask);
+  }
+
   return (
     <BrowserRouter>        
         <Routes>
             <Route path="/" element={<Layout />} >
                 <Route path="add-task" element={<AddTodo addTask={addTask} />} />
-                <Route path=":search" element={<TodoList tasks={ tasks }/>} />
-                <Route index element={<TodoList tasks={ tasks }/>} />
+                <Route path=":search" element= {<TodoList tasks={ tasks } toggleCompleted={toggleCompleted}/>} />
+                <Route index element={<TodoList tasks={ tasks } toggleCompleted={toggleCompleted} />} />
             </Route>
         </Routes>
     </BrowserRouter>    

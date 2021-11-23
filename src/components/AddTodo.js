@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import objectHash from "object-hash";
+import { now } from "jquery";
+
 
 function AddTodo({ addTask }) {
     
@@ -12,6 +15,7 @@ function AddTodo({ addTask }) {
         evt.preventDefault();
         addTask(
             {
+                id: objectHash.MD5(evt.target[0].value + now()), 
                 name: evt.target[0].value,
                 completed: false
             }
