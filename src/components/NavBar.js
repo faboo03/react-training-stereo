@@ -27,7 +27,7 @@ function NavBar() {
           <div className="btn-group" role="group">
           <NavLink
               className={'btn btn-outline-dark bg-light'}
-              to={`/`}
+              to={`/delete`}
             >
               <FaTrash />
             </NavLink>

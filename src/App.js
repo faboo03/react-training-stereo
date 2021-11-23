@@ -9,7 +9,7 @@ import data from './data.json';
 function Layout() {
   return (
     <section classID="todo">
-        <Outlet />
+      <Outlet />
       <NavBar />
     </section>
   )
@@ -19,30 +19,31 @@ function App() {
   const [tasks, setTasks] = useState(data);
 
   let addTask = (task) => {
-    setTasks([...tasks,task]);
+    setTasks([...tasks, task]);
   }
 
   let toggleCompleted = (taskId) => {
-      let currentTask = tasks.map((task) => {
-          if(task.id === taskId) {
-            task.completed = !task.completed
-          }
-          return task;
-        }
-      )
-      setTasks(currentTask);
+    let currentTask = tasks.map((task) => {
+      if (task.id === taskId) {
+        task.completed = !task.completed
+      }
+      return task;
+    }
+    )
+    setTasks(currentTask);
   }
 
   return (
-    <BrowserRouter>        
-        <Routes>
-            <Route path="/" element={<Layout />} >
-                <Route path="add-task" element={<AddTodo addTask={addTask} />} />
-                <Route path=":search" element= {<TodoList tasks={ tasks } toggleCompleted={toggleCompleted}/>} />
-                <Route index element={<TodoList tasks={ tasks } toggleCompleted={toggleCompleted} />} />
-            </Route>
-        </Routes>
-    </BrowserRouter>    
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route path="add-task" element={<AddTodo addTask={addTask} />} />
+          <Route path=":search" element={<TodoList tasks={tasks} toggleCompleted={toggleCompleted} />} />
+          <Route path="/" element={<TodoList tasks={tasks} toggleCompleted={toggleCompleted} />} />
+          <Route path="delete" element={<TodoList tasks={tasks} toggleCompleted={toggleCompleted} />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
