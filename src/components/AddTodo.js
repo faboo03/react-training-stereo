@@ -1,4 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 function AddTodo({ addTask }) {
+    
+    const navigate = useNavigate();
+
+    /**
+     * Prevent from submitting the form and redirect after that
+     * @param {} evt 
+     */
     const newTask = (evt) => {
         evt.preventDefault();
         addTask(
@@ -7,6 +16,7 @@ function AddTodo({ addTask }) {
                 completed: false
             }
         )
+        navigate("/");
     }
 
     return (

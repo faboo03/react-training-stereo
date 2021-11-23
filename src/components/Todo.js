@@ -20,8 +20,7 @@ class Todo extends Component {
     }
 
     render() {
-        let className = "list-group-item d-flex align-items-center";
-        
+        let className = "list-group-item d-flex align-items-center";        
         return (
             <li className={className + (this.state.isChecked?" bg-success":"")}>
                 {this.state.name}

@@ -1,7 +1,7 @@
 import Todo from './Todo'; 
 
 function TodoList({tasks}) {
-    console.log(tasks);
+
     return (
         <>
             <h1 className="m-3">Liste de tâches</h1>
