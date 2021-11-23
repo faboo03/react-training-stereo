@@ -1,16 +1,36 @@
 import { FaCheckSquare, FaListAlt, FaPlusSquare, FaTrash } from 'react-icons/fa';
-
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
     return (
         <footer className="d-flex justify-content-between bg-secondary p-3" id="mainFooter">
           <div className="btn-group">
-            <a href="#" class="btn btn-outline-dark bg-light"><FaCheckSquare /></a>
-            <a href="#" class="btn btn-outline-dark bg-light"><FaListAlt /></a>
-            <a href="#" class="btn btn-outline-dark bg-light"><FaPlusSquare /></a>
+            <NavLink
+              className={'btn btn-outline-dark bg-light'}
+              to={`/`}
+            >
+              <FaCheckSquare />
+            </NavLink>
+            <NavLink
+              className={'btn btn-outline-dark bg-light'}
+              to={`/completed`}
+            >
+              <FaListAlt />
+            </NavLink>
+            <NavLink
+              className={'btn btn-outline-dark bg-light'}
+              to={`/add-task`}
+            >
+              <FaPlusSquare />
+            </NavLink>
           </div>
           <div class="btn-group" role="group">
-            <a href="#" class="btn btn-outline-dark bg-light"><FaTrash /></a>
+          <NavLink
+              className={'btn btn-outline-dark bg-light'}
+              to={`/`}
+            >
+              <FaTrash />
+            </NavLink>
           </div>
         </footer>
     )
