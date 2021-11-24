@@ -27,11 +27,12 @@ function AddTodo({ addTask }) {
     }
 
     return (
-        <ul className="list-group m-3">
+        <li className="list-group-item d-flex align-items-center">
             <form onSubmit={newTask}>
                 <input ref={inputEl} type="text" onChange={handleChange} className="form-control" id="exampleFormControlInput1" placeholder="Add a todo" value={value} />
             </form>
-        </ul>
+        </li>
+
     )
 }
 

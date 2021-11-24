@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import AddTodo from './AddTodo.js'
 import NavBar from './NavBar.js';
 import FetchJson from '../utils/FetchJson';
+import { useAxios } from '../utils/useAxios';
 
 export const statusEnum = {
     LOADING: "loading",
@@ -24,16 +25,20 @@ function TodoList() {
     const [listFilter, setListFilter] = useState(filterEnum.ALL);
 
     const fetchData = new FetchJson('http://localhost:3001');
-    
+
+    const {response, error, loading} = useAxios({
+        method: 'GET',
+        url: '/todos',
+        headers: { // no need to stringify
+          accept: '*/*'
+        }
+    });
 
     useEffect(() => {
-        fetchData.getData( (data) => {
-            setTasks(data); 
-        }
-        )
-    }, []);
+        setTasks(response); 
+    }, [response]);
 
-    let filteredTasks = useMemo((listStatus) => {
+    let filteredTasks = useMemo(() => {
         switch (listFilter) {
             case filterEnum.COMPLETED:
                 return tasks.filter(task => task.completed);
@@ -48,7 +53,7 @@ function TodoList() {
 
     //Handle Tasks states
     let addTask = (task) => {
-        fetchData.postData(task)
+        fetchData.postData(task)        
         setTasks([...tasks, task]);
         setListStatus(statusEnum.LIST);
     }
@@ -76,7 +81,7 @@ function TodoList() {
         <section classID="todo">
             <h1 className="m-3">Liste de tâches : {listFilter}</h1>
             <ul className="list-group m-3">
-                {statusEnum === filterEnum.LOADING ?
+                {loading ?
                     <li className="list-group-item d-flex align-items-center">Loading</li>
                     :
                     filteredTasks.length > 0 ?
@@ -91,10 +96,8 @@ function TodoList() {
                         ) :
                         <li className="list-group-item d-flex align-items-center">Aucune Tâche</li>
                 }
+                {listStatus === statusEnum.ADD ? <AddTodo addTask={addTask} /> : ""}
             </ul>
-
-            {listStatus === statusEnum.ADD ? <AddTodo addTask={addTask} /> : ""}
-
             <NavBar setListStatus={setListStatus} setListFilter={setListFilter}  listFilter={listFilter} listStatus={listStatus}/>
         </section>
     )
