@@ -95,7 +95,7 @@ function TodoList() {
 
             {listStatus === statusEnum.ADD ? <AddTodo addTask={addTask} /> : ""}
 
-            <NavBar setListStatus={setListStatus} setListFilter={setListFilter} />
+            <NavBar setListStatus={setListStatus} setListFilter={setListFilter}  listFilter={listFilter} listStatus={listStatus}/>
         </section>
     )
 }
