@@ -1,5 +1,5 @@
 import Todo from './Todo'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import AddTodo from './AddTodo.js'
 import NavBar from './NavBar.js';
 import FetchJson from '../utils/FetchJson';
@@ -10,7 +10,7 @@ export const statusEnum = {
     ADD: "add",
     REMOVE: "remove"
 }
-
+ 
 export const filterEnum = {
     ALL: "all",
     TODO: "todo",
@@ -24,6 +24,7 @@ function TodoList() {
     const [listFilter, setListFilter] = useState(filterEnum.ALL);
 
     const fetchData = new FetchJson('http://localhost:3001');
+    
 
     useEffect(() => {
         fetchData.getData( (data) => {
@@ -31,6 +32,24 @@ function TodoList() {
         }
         )
     }, []);
+
+    let filteredTasks = []; 
+    filteredTasks = useMemo((listStatus) => {
+        console.log("dedans");
+        switch (listFilter) {
+            case filterEnum.COMPLETED:
+                filteredTasks = tasks.filter(task => task.completed);
+                break;
+            case filterEnum.TODO:
+                filteredTasks = tasks.filter(task => !task.completed);
+                break;
+            default:
+                filteredTasks = tasks;
+                break;
+        }
+        return filteredTasks; 
+    }, [listFilter, tasks]);
+
 
 
     //Handle Tasks states
@@ -55,33 +74,26 @@ function TodoList() {
             return task;
         }
         )
+        fetchData.putData(currentTask);
         setTasks(currentTasks);
-    }
-
-    // handle filter tasks
-    let filteredTasks = tasks;
-    switch (listStatus) {
-        case filterEnum.COMPLETED:
-            filteredTasks = tasks.filter(task => task.completed);
-            break;
-        case filterEnum.TODO:
-            filteredTasks = tasks.filter(task => !task.completed);
-            break;
-        default:
-            filteredTasks = tasks;
-            break;
     }
 
     return (
         <section classID="todo">
-            <h1 className="m-3">Liste de tâches</h1>
+            <h1 className="m-3">Liste de tâches : {listFilter}</h1>
             <ul className="list-group m-3">
                 {statusEnum === filterEnum.LOADING ?
                     <li className="list-group-item d-flex align-items-center">Loading</li>
                     :
                     filteredTasks.length > 0 ?
                         filteredTasks.map(
-                            (task, key) => <Todo task={task} toggleCompleted={toggleCompleted} handleDelete={handleDelete} listStatus={listStatus} key={key} />
+                            (task, key) => <Todo 
+                                                task={task} 
+                                                toggleCompleted={toggleCompleted} 
+                                                handleDelete={handleDelete} 
+                                                listStatus={listStatus} 
+                                                key={key} 
+                                        />
                         ) :
                         <li className="list-group-item d-flex align-items-center">Aucune Tâche</li>
                 }
@@ -89,7 +101,7 @@ function TodoList() {
 
             {listStatus === statusEnum.ADD ? <AddTodo addTask={addTask} /> : ""}
 
-            <NavBar setListStatus={setListStatus} />
+            <NavBar setListStatus={setListStatus} setListFilter={setListFilter} />
         </section>
     )
 }

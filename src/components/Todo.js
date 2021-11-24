@@ -4,7 +4,7 @@ import { statusEnum } from "./TodoList";
 
 function Todo({task, toggleCompleted, listStatus, handleDelete}) {
     const onClick = () => {
-        if(statusEnum.DELETE === listStatus) {
+        if(statusEnum.REMOVE === listStatus) {
             handleDelete(task)
         } else {
             toggleCompleted(task);
@@ -15,7 +15,7 @@ function Todo({task, toggleCompleted, listStatus, handleDelete}) {
         <li className="list-group-item d-flex align-items-center">
             {task.name}
             {
-                listStatus === statusEnum.DELETE ?
+                listStatus === statusEnum.REMOVE ?
                     <button onClick={onClick} className={"btn btn-sm ms-auto btn-outline-danger"} ><FaTrash/></button> : 
                     <button onClick={onClick} className={task.completed?"btn btn-sm ms-auto btn-success":"btn btn-sm ms-auto btn-outline-success"} ><FaCheck /></button> 
             }                

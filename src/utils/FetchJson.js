@@ -39,6 +39,18 @@ export default class FetchJson {
             .catch((err) => {
                 callbackError(err);
             });
+    } 
+
+    putData = (object, callback = () => {}, callbackError = (err) => { console.log(err)}) => {
+        axios
+            .put(`/todos/${object.id}`, object)
+            .then((res) => {
+                callback(res.data);
+            })
+            .catch((err) => {
+                callbackError(err);
+            });
     }
+    
 
 }
