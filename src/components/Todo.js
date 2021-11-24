@@ -1,5 +1,7 @@
 import { FaCheck, FaTrash } from "react-icons/fa";
 import { statusEnum } from "./TodoList";
+
+
 function Todo({task, toggleCompleted, listStatus, handleDelete}) {
     const onClick = () => {
         if(statusEnum.DELETE === listStatus) {
