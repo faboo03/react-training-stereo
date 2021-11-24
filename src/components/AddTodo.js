@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import uniqid from 'uniqid'; 
 
 
@@ -6,12 +6,17 @@ function AddTodo({ addTask }) {
 
     const [value, setValue] = useState("");
 
-    const handleChange = (evt) => {
-        setValue(evt.target.value);
+    const inputEl = useRef(null);
+    useEffect(() => {
+        inputEl.current.focus();
+    },[]);
+    
+    const handleChange = () => {
+        setValue(inputEl.current.value);
     }
 
-    const newTask = (evt) => {
-        evt.preventDefault();
+    const newTask = (e) => {
+        e.preventDefault();
         addTask(
             {
                 id: uniqid(),
@@ -24,7 +29,7 @@ function AddTodo({ addTask }) {
     return (
         <ul className="list-group m-3">
             <form onSubmit={newTask}>
-                <input type="text" onChange={handleChange} className="form-control" id="exampleFormControlInput1" placeholder="Add a todo" value={value} />
+                <input ref={inputEl} type="text" onChange={handleChange} className="form-control" id="exampleFormControlInput1" placeholder="Add a todo" value={value} />
             </form>
         </ul>
     )

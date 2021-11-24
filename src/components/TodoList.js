@@ -33,21 +33,15 @@ function TodoList() {
         )
     }, []);
 
-    let filteredTasks = []; 
-    filteredTasks = useMemo((listStatus) => {
-        console.log("dedans");
+    let filteredTasks = useMemo((listStatus) => {
         switch (listFilter) {
             case filterEnum.COMPLETED:
-                filteredTasks = tasks.filter(task => task.completed);
-                break;
+                return tasks.filter(task => task.completed);
             case filterEnum.TODO:
-                filteredTasks = tasks.filter(task => !task.completed);
-                break;
+                return tasks.filter(task => !task.completed);
             default:
-                filteredTasks = tasks;
-                break;
+                return tasks;
         }
-        return filteredTasks; 
     }, [listFilter, tasks]);
 
 
@@ -107,7 +101,3 @@ function TodoList() {
 }
 
 export default TodoList;
-
-
-
-
